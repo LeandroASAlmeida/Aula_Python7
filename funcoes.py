@@ -1,6 +1,7 @@
+
 import os
 import time
-import constantes as cons
+import constantes as c
 
 def LimpaTela():
     os.system('cls')
@@ -8,96 +9,97 @@ def LimpaTela():
 def Aguarda():
     time.sleep(4)
 
-def AguardaLimpa():
+def AguardaeLimpa():
     Aguarda()
     LimpaTela()
 
-def validaTipoConta(pListagem = False):
+def validaTipoConta(pEhListagem = False):
     tipoConta = 0
-    if pListagem:
-        tipoConta = int(input(cons.MSG_OPCOES_TIPOS_CONTAS_LISTAGEM))
+    if pEhListagem:
+        tipoConta = int(input(c.MSG_OPCOES_TIPOS_CONTAS_LISTAGEM))
     else:
-        tipoConta = int(input(cons.MSG_OPCOES_TIPOS_CONTAS))
-    while (not tipoConta in [1,2,3,4]):
-        print(cons.MSG_OPCAO_INVALIDA)
-        AguardaLimpa()
-        if pListagem:
-            tipoConta = int(input(cons.MSG_OPCOES_TIPOS_CONTAS_LISTAGEM))
+        tipoConta = int(input(c.MSG_OPCOES_TIPOS_CONTAS))
+    while ( not tipoConta in [1,2,3,4]):
+        print(c.MSG_OPCAO_INVALIDA)
+        AguardaeLimpa()
+        if pEhListagem:
+            tipoConta = int(input(c.MSG_OPCOES_TIPOS_CONTAS_LISTAGEM))
         else:
-            tipoConta = int(input(cons.MSG_OPCOES_TIPOS_CONTAS))
+            tipoConta = int(input(c.MSG_OPCOES_TIPOS_CONTAS))
     return tipoConta
 
-def menuOperacoes(pTipoConta):
+def menuOperacoes(pTipoConta): #|1-Corrente |2- Salário |3-Poupança
     opcao = 0
-    AguardaLimpa()
-    print('Operação desejada: \n')
+    AguardaeLimpa()
+    print('Operação desejada\n'
+          '--------------------\n')
     match pTipoConta:
         case 1:
-            print('1 - Sacar \n'
-                  '2 - Depositar \n'
-                  '3 - Transferir \n'
-                  '4 - Ver Saldo \n'
-                  '5 - Encerrar \n')
-            opcao = int(input('Informe a opção desejada: \n'))
-            while (not opcao in [1, 2, 3, 4, 5]):
-                print(cons.MSG_OPCAO_INVALIDA)
-                AguardaLimpa()
-                print('1 - Sacar\n'
-                    | '2 - Depositar\n'
-                      '3 - Transferir\n'
-                      '4 - Ver Saldo\n'
-                      '5 - Encerrar \n')
-                opcao = int(input('Informe a opção desejada: \n'))
-            return opcao
-        case 2:
-            print('1 - Sacar\n'
-                | '2 - Depositar\n'
-                  '3 - Transferir\n'
-                  '4 - Ver Saldo\n'
-                  '5 - Encerrar \n')
-            opcao = int(input('Informe a opção desejada: \n'))
-            while (not opcao in [1, 2, 3, 4, 5]):
-                print(cons.MSG_OPCAO_INVALIDA)
-                AguardaLimpa()
-                print('1 - Sacar\n'
-                      '2 - Depositar\n'
-                      '3 - Transferir\n'
-                      '4 - Ver Saldo\n'
-                      '5 - Encerrar \n')
-                opcao = int(input('Informe a opção desejada!'))
+            opcao = int(input('1- Sacar      |2- Depositar\n'
+                              '3- Transferir |4- Ver Saldo\n'
+                              '       5- Encerrar\n'))
+            while ( not (opcao in [1,2,3,4,5])):
+                print(c.MSG_OPCAO_INVALIDA)
+                AguardaeLimpa()
+                opcao = int(input('1- Sacar      |2- Depositar\n'
+                                '3- Transferir |4- Ver Saldo\n'
+                                '       5- Encerrar\n'))
             return opcao
         case 3:
-            print('1 - Sacar | 2 - Ver Saldo | 3 - Encerrar \n')
-            opcao = int(input('Informe a opção desejada: \n'))
-            while (not opcao in [1, 2, 3]):
-                print(cons.MSG_OPCAO_INVALIDA)
-                AguardaLimpa()
-                print('1 - Sacar | 2 - Ver Saldo | 3 - Encerrar \n')
-                opcao = int(input('Informe a opção desejada: \n'))
+            opcao = int(input('1- Sacar      |2- Depositar\n'
+                            '3- Transferir |4- Ver Saldo\n'
+                            '       5- Encerrar\n'))
+            while ( not (opcao in [1,2,3,4,5])):
+                print(c.MSG_OPCAO_INVALIDA)
+                AguardaeLimpa()
+                opcao = int(input('1- Sacar      |2- Depositar\n'
+                                '3- Transferir |4- Ver Saldo\n'
+                                '       5- Encerrar\n'))
             return opcao
-        case default:
+        case 2:
+            opcao = int(input('1- Sacar |2- Ver Saldo\n'
+                              '     3- Voltar\n'))
+            while (not ( opcao in [1,2,3])):
+                print(c.MSG_OPCAO_INVALIDA)
+                opcao = int(input('1- Sacar |2- Ver Saldo\n'
+                                  '     3- Voltar\n'))
+
+            return opcao
+        case outrocaso:
             pass
 
-def validaTamanhoConta(pConta):
-    if len(pConta) != cons.TAMANHO_VALIDO_CONTA:
-        print(cons.MSG_ERRO_CONTA)
-    return len(pConta) == cons.TAMANHO_VALIDO_CONTA
+def EhContaValida(pConta):
+    if len(pConta) != c.TAM_VALIDO_CONTA:
+        print(c.MSG_NUMERO_CONTA_INVALIDO)
+    return len(pConta) == c.TAM_VALIDO_CONTA
 
-def existeConta(pNumero, pConta, pCadastroConta = True):
-    if not pCadastroConta:
+def ExisteConta(pNumero,pConta,pEhCadastro=False):
+    if not pEhCadastro:
         if not pNumero in pConta:
-            print(cons.MSG_CONTA_INEXISTENTE)
+            print(c.MSG_CONTA_INEXISTENTE)
     else:
         if pNumero in pConta:
-            print(cons.MSG_CONTA_EXISTENTE)
+            print(c.MSG_CONTA_EXISTENTE)
     return pNumero in pConta
 
-def existeContaCadastrada(pConta, pTipoConta):
+def ExisteContaCadastrada(pConta,pTipoConta):
     if len(pConta) == 0:
         if pTipoConta == 1:
-            print(cons.MSG_SEM_CONTA_CORRENTE)
+            print(c.MSG_SEM_CONTA_CORRENTE)
         elif pTipoConta == 2:
-            print(cons.MSG_SEM_CONTA_POUPANCA)
+            print(c.MSG_SEM_CONTA_SALARIO)
         else:
-            print(cons.MSG_SEM_CONTA_SALARIO)
+            print(c.MSG_SEM_CONTA_POUPANCA)
     return len(pConta) > 0
+
+def ExisteSaldo(pNumero,pConta,pTipoConta,pValorOp):
+    temSaldo = True
+    if pTipoConta == 1: #Conta Corrente
+        if ( pValorOp  + (pValorOp * 0.05) > pConta[pNumero]):
+            temSaldo = False
+    if pTipoConta in [2,3]: #Demais contas
+        if ( pValorOp > pConta[pNumero] ):
+            temSaldo = False
+    if ( not (temSaldo) ):
+        print(c.MSG_SALDO_INSUFICIENTE)
+    return temSaldo
