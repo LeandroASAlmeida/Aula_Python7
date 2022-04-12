@@ -5,7 +5,7 @@ MSG_SUCESSO_SAQUE = 'Saque efetuado com sucesso!'
 MSG_SUCESSO_TRANSFERENCIA = "Transferência efetuada com sucesso!"
 MSG_SUCESSO_DEPOSITO = 'Depósito efetuado com sucesso!'
 MSG_SUCESSO_EXCLUIR = 'Conta excluída com sucesso!'
-MSG_SUCESSO_CADATRAR = 'Conta cadastrada com sucesso!'
+MSG_SUCESSO_CADASTRAR = 'Conta cadastrada com sucesso!'
 
 MSG_ERRO_SAQUE = 'Ocorreu um erro ao efetuar o saque!'
 MSG_ERRO_TRANSFERENCIA = 'Ocorreu um erro ao efetuar a transferência!'
@@ -26,6 +26,7 @@ MSG_SEM_CONTA_CORRENTE = 'Não há constas correntes cadastradas!'
 MSG_SEM_CONTA_POUPANCA = 'Não há constas poupanças cadastradas!'
 MSG_SEM_CONTA_SALARIO = 'Não há constas salários cadastradas!'
 MSG_NUMERO_CONTA_DESTINO = 'Informe o numero da conta destino!'
+MSG_NUMERO_CONTA_INVALIDO ='Numero invalido'
 
 MSG_NUMERO_CONTA = 'Informe o número da conta: '
 

@@ -77,7 +77,7 @@ while op != 5:
             match tipoConta:
                 case 1:
                     if f.ExisteContaCadastrada(contasC,tipoConta):
-                        numero = input(cons.MSG_CONTA_PARA_EXCLUIR)
+                        numero = input(cons.MSG_CONTA_EXCLUIR)
                         if f.EhContaValida(numero):
                             if f.ExisteConta(numero,contasC):
                                 c = ContaCorrente(numero)
@@ -86,7 +86,7 @@ while op != 5:
                                 del(c)
                 case 2:
                     if f.ExisteContaCadastrada(contasS,tipoConta):
-                        numero = input(cons.MSG_CONTA_PARA_EXCLUIR)
+                        numero = input(cons.MSG_CONTA_EXCLUIR)
                         if f.EhContaValida(numero):
                             if f.ExisteConta(numero,contasS):
                                 c = ContaSalario(numero)
@@ -95,7 +95,7 @@ while op != 5:
                                 del(c)
                 case outrocaso:
                     if f.ExisteContaCadastrada(contasP,tipoConta):
-                        numero = input(cons.MSG_CONTA_PARA_EXCLUIR)
+                        numero = input(cons.MSG_CONTA_EXCLUIR)
                         if f.EhContaValida(numero):
                             if f.ExisteConta(numero,contasP):
                                 c = ContaPoupanca(numero)
