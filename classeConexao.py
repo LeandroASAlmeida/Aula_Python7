@@ -28,8 +28,6 @@ class Conexao():
             # if len(pClausula) != 0:
             #     sql += ' ' + pClausula
             sql += sqlW + ';'
-            print(sql)
-            return
             cursor.execute(sql)
             total = 0
             for linha in cursor:
@@ -50,7 +48,7 @@ class Conexao():
         if conn.is_connected():
             cursor = conn.cursor()
             sql = 'INSERT INTO '+ pTabela + ' (' 
-            sqlC=''
+            sqlC=' '
             for i in range(0,len(pCampos)):
                 sqlC += pCampos[i]+', '
             sqlC = sqlC[:-2] + ') '
@@ -74,38 +72,52 @@ class Conexao():
     
     def delete(self,pTabela,pClausula=['']):
         conn = mysql.connector.connect(host=self.host,user=self.usuario,database=self.banco,passwd=self.senha)
-        if self.conn.is_connected():
-            cursor = self.conn.cursor()
-            sql = 'DELETE FROM' + pTabela
+        if conn.is_connected():
+            cursor = conn.cursor()
+            sql = ' DELETE FROM ' + pTabela
             sqlW = ''
-            if pClausula[0] != '':
-               sql +='WHERE'
+            if pClausula[0] != ' ':
+               sql +=' WHERE '
                for i in range(0,len(pClausula)):
                    if i == 0:
                        sqlW = pClausula[i]
                    else:
-                        sqlW += ' AND' + pClausula[i]
+                        sqlW += ' AND ' + pClausula[i]
             sqlW = sqlW
             sql += sqlW + ';'
-            print(sql)
-            return
-            #sql = 'DELETE FROM conta_corrente WHERE id_conta_corrente = 4'
             cursor.execute(sql)
             try:
-                self.conn.commit()
+                conn.commit()
                 print('Registro excluído com sucesso')
             except:
                 print('Erro ao excluir o registro')
         else:
             print('Não está conectado ao banco de dados')
     
-    def update(self):
-        if self.conn.is_connected():
-            cursor = self.conn.cursor()
-            sql = 'UPDATE conta_corrente SET numero_conta_corrente = "54321" WHERE id_conta_corrente = 5'
+    def update(self,pTabela,pCampos,pValores,pClausula=['']):
+        conn = mysql.connector.connect(host=self.host,user=self.usuario,database=self.banco,passwd=self.senha)
+        if conn.is_connected():
+            cursor = conn.cursor()
+            sql = ' UPDATE ' + pTabela + ' SET '
+            sqlC = ''
+            for i in range (0,len(pCampos)):
+                if type (pValores[i]) is str:
+                    sqlC += pCampos[i] + ' = "' + str(pValores[i]) + '", '
+                else:
+                    sqlC += pCampos[i] + ' = ' + str(pValores[i]) + ', '
+            sqlC = sqlC[:-2] 
+            sqlW = ''
+            if pClausula[0] != '':
+                sqlW = ' WHERE '
+                for i in range(0,len(pClausula)):
+                    if i == 0:
+                        sqlW += pClausula[i]
+                    else:
+                        sqlW += ' AND ' + pClausula[i]        
+            sql += sqlC + sqlW + ';'
             cursor.execute(sql)
             try:
-                self.conn.commit()
+                conn.commit()
                 print('Registro alterado com sucesso')
             except:
                 print('Erro ao alterar o registro')
@@ -114,12 +126,33 @@ class Conexao():
 
 conexao = Conexao('localhost','banco','root','1234')
 
-#campos = ['numero_conta_corrente','saldo_conta_corrente']
-#clausula = ['1=1','id_conta_corrente >= 2','numero_conta_corrente != ""']
-campos = ['numero_conta_poupanca','saldo_conta_poupanca']
-valores =['98765',10.50]
-#clausula = ['id_conta_corrente = 3','numero_conta_corrente is not null','1=1']
-#conexao.select('conta_corrente',campos,clausula)
-conexao.insert('conta_poupanca',campos,valores)
-#conexao.delete('conta_corrente',clausula)
+campos = ['numero_conta_corrente','saldo_conta_corrente']
+valores = ['22222',90]
+conexao.insert('conta_corrente', campos,valores)
+
+campos = ['numero_conta_corrente','saldo_conta_corrente']
+clausula = ['1=1','id_conta_corrente >= 2','numero_conta_corrente != ""']
+conexao.select = ('conta_corrente', campos)
+
+campos = ['numero_conta_corrente','saldo_conta_corrente']
+valores = ['33333',10.50]
+conexao.insert('conta_corrente', campos,valores)
+
+campos = ['*']
+conexao.select('conta_corrente',campos)
+
+campos = ['numero_conta_corrente','saldo_conta_corrente']
+valores=['55555',45]
+clausula = ['numero_conta_corrente = "98765"']
+conexao.update('conta_corrente', campos,valores,clausula)
+
+campos = ['*']
+conexao.select('conta_corrente',campos)
+
+clausula = ['numero_conta_corrente = "33333"']
+conexao.delete('conta_corrente',clausula)
+
+campos = ['*']
+conexao.select('conta_corrente',campos)
+
 
